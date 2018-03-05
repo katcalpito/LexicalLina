@@ -43,8 +43,14 @@ public class LexicalLina {
     
     public static void com2(String statement,int pos){
      
-        if(statement.charAt(pos) == 'c');
+        if(statement.charAt(pos) == 'c'){
             com3(statement,pos+1);
+            
+        }
+        else if(statement.charAt(pos)=='l'){
+            loop(statement,pos+1);
+        }
+            
     }
     
     public static void com3(String statement,int pos){
@@ -104,6 +110,110 @@ public class LexicalLina {
     } 
      
      
+    public static void loop(String statement, int pos){
+        if(statement.charAt(pos)=='o'){
+            pos+=1;
+            if(statement.charAt(pos)=='o'){
+                pos+=1;
+                if(statement.charAt(pos)=='p'){
+                    pos+=1;
+                    if(whitespace(statement.charAt(pos))){
+                        pos+=1;
+                        if(statement.charAt(pos)=='d'){
+                            pos+=1;
+                            if(statement.charAt(pos)=='o'){
+                                pos+=1;
+                                if(statement.charAt(pos)==':'){
+                                    loop2(statement,pos);
+                                }
+                                else{
+                                    WrongSyntaxError();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+    }
+    
+    public static void loop2(String statement,int pos){
+        int counter = pos;
+        // Checks comment string
+       
+        String name = "";
+        char temp = ' ';
+        counter++;
+        while(statement.charAt(counter) != ':' ){
+            temp = statement.charAt(counter);
+            if(letter(temp) || digit(temp) || whitespace(temp))
+                name += temp;
+            else
+                break;
+            counter++;
+        }
+        if(statement.charAt(counter) == ':'){
+            loop3(statement,++counter,name);
+        }else{
+                WrongSyntaxError();
+        }
+    }
+    
+    public static void loop3(String statement,int pos,String varname){
+        int counter = pos;
+        // Checks comment string
+        String name = "";
+        char temp = ' ';
+        while(statement.charAt(counter)!=' '){
+            temp = statement.charAt(counter);
+            if(digit(temp)){
+                counter++;
+                name += temp;
+            }
+            else{
+                ErrorStartWithNumber();
+                break;
+            }
+        }
+        if(whitespace(statement.charAt(counter))){
+           loop4(statement,++counter,varname,name);
+        }else{
+                WrongSyntaxError();
+        }
+        
+    
+    }
+    
+    public static void loop4(String statement, int pos, String varname, String times){
+        if(statement.charAt(pos)=='t'){
+            pos+=1;
+            if(statement.charAt(pos)=='i'){
+                pos+=1;
+                if(statement.charAt(pos)=='m'){
+                    pos+=1;
+                    if(statement.charAt(pos)=='e'){
+                        pos+=1;
+                        if(statement.charAt(pos)=='s'){
+                            pos+=1;
+                            if(statement.charAt(pos)==':'){
+                                pos+=1;
+                                if(statement.charAt(pos)=='/'){
+                                   loopfinal(statement,pos,varname,times);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public static void loopfinal(String statement, int pos, String varname, String times){
+        Token s = new Token(varname,"Loop "+times+" times");
+        TokenStream.add(s);
+        //FINISHED INTEGER
+    }
     public static void int1(String statement,int pos){
         if(statement.charAt(pos)=='n'){
             pos+=1;
@@ -132,7 +242,6 @@ public class LexicalLina {
     public static void intl2(String statement, int pos){
          int counter = pos;
         // Checks integer data type
-        System.out.println(statement);
         String name = "";
         char temp = ' ';
         if(!letter(statement.charAt(counter))) 
@@ -150,7 +259,6 @@ public class LexicalLina {
             
             counter++;
         }
-        System.out.println(statement.charAt(counter));
         if(statement.charAt(counter) == '='){
            intl3(statement,++counter,name);
         }else{
@@ -163,12 +271,10 @@ public class LexicalLina {
     public static void intl3(String statement,int pos,String varname){
         int counter = pos;
         // Checks comment string
-        System.out.println(statement.charAt(pos));
         String name = "";
         char temp = ' ';
         while(statement.charAt(counter) != ';' ){
             temp = statement.charAt(counter);
-            System.out.println(temp);
             if(digit(temp)){
                 counter++;
                 name += temp;
@@ -192,7 +298,7 @@ public class LexicalLina {
     public static void finalint(String statement,String varname){
         Token s = new Token(statement,varname);
         TokenStream.add(s);
-        //FINISHED COMMENT!
+        //FINISHED INTEGER
     
     }
     public static void yield1(){
