@@ -3,3 +3,5 @@
 //cmt:Please clean you room when you leave:/
 Integer rico=53;
 //loop do: dsadas :5 times:/
+yield(aye)
+yield("aye")
